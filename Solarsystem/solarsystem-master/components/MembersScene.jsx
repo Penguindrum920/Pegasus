@@ -12,17 +12,17 @@ import SimpleMembersPlanets from './SimpleMembersPlanets'
 
 // Member data - using correct web paths and fixed names
 const members = [
-  { name: 'Savitha G', role: 'Teacher Coordinator', color: '#ff6b35', size: 3, distance: 0, isSun: true, image: 'Pegasus\public\savitha.jpg' },
-  { name: 'Kavish Narendra Raut', role: 'Club Head', color: '#4ecdc4', size: 1.2, distance: 25, image: 'Pegasus\public\kavish.jpg' },
-  { name: 'Hrudai Nirmal', role: 'Vice President', color: '#45b7d1', size: 1.1, distance: 35, image: 'Pegasus\public\hrudai.jpg' },
-  { name: 'Bhavani Krupakara', role: 'Vice President', color: '#96ceb4', size: 1.1, distance: 45, image: 'Pegasus\public\bhavani.jpg' },
-  { name: 'Shivam', role: 'Technical Head', color: '#feca57', size: 1.0, distance: 55, image: 'Pegasus\public\shivam.jpg' },
-  { name: 'Ayush Kumar', role: 'Technical Head', color: '#ff9ff3', size: 1.0, distance: 65, image: 'Pegasus\public\ayush.jpg' },
-  { name: 'Aditya Kaushik', role: 'Design Head', color: '#54a0ff', size: 0.9, distance: 75, image: 'Pegasus\public\aditya.jpg' },
-  { name: 'Retash Reddy', role: 'Core Member', color: '#5f27cd', size: 0.8, distance: 85, image: 'Pegasus\public\retash.jpg' },
-  { name: 'Bhuvan', role: 'Core Member', color: '#00d2d3', size: 0.8, distance: 95, image: 'Pegasus\public\bhuvan.jpg' },
-  { name: 'Bhargav', role: 'Core Member', color: '#ff6348', size: 0.8, distance: 105, image: 'Pegasus\public\bhargav.jpg' },
-  { name: 'Tejas NG', role: 'Core Member', color: '#2ed573', size: 0.8, distance: 115, image: 'Pegasus\public\tejas.jpg' },
+  { name: 'Savitha G', role: 'Teacher Coordinator', color: '#ff6b35', size: 3, distance: 0, isSun: true, image: '/assets/members/savitha.jpg' },
+  { name: 'Kavish Narendra Raut', role: 'Club Head', color: '#4ecdc4', size: 1.2, distance: 25, image: '/assets/members/kavish.jpg' },
+  { name: 'Hrudai Nirmal', role: 'Vice President', color: '#45b7d1', size: 1.1, distance: 35, image: '/assets/members/hrudai.jpg' },
+  { name: 'Bhavani Krupakara', role: 'Vice President', color: '#96ceb4', size: 1.1, distance: 45, image: '/assets/members/bhavani.jpg' },
+  { name: 'Shivam', role: 'Technical Head', color: '#feca57', size: 1.0, distance: 55, image: '/assets/members/shivam.jpg' },
+  { name: 'Ayush Kumar', role: 'Technical Head', color: '#ff9ff3', size: 1.0, distance: 65, image: '/assets/members/ayush.jpg' },
+  { name: 'Aditya Kaushik', role: 'Design Head', color: '#54a0ff', size: 0.9, distance: 75, image: '/assets/members/aditya.jpg' },
+  { name: 'Retash Reddy', role: 'Core Member', color: '#5f27cd', size: 0.8, distance: 85, image: '/assets/members/retash.jpg' },
+  { name: 'Bhuvan', role: 'Core Member', color: '#00d2d3', size: 0.8, distance: 95, image: '/assets/members/bhuvan.jpg' },
+  { name: 'Bhargav', role: 'Core Member', color: '#ff6348', size: 0.8, distance: 105, image: '/assets/members/bhargav.jpg' },
+  { name: 'Tejas NG', role: 'Core Member', color: '#2ed573', size: 0.8, distance: 115, image: '/assets/members/tejas.jpg' },
 ]
 
 function MemberOverlay({ member, onClose, isVisible, onPrevious, onNext, currentIndex, totalMembers }) {
