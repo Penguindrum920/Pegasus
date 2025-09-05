@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pegasus Club Game</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+      :root { --bg: #0b1020; --panel: #10162b; --text: #e4e8ff; --accent: #6ea8fe; }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: radial-gradient(1200px 600px at 30% 10%, #121a35 0%, #0b1020 60%, #090e1a 100%); color: var(--text); }
+      header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #1a2240; position: sticky; top: 0; backdrop-filter: blur(6px); background: rgba(9, 14, 26, 0.6); }
+      header h1 { margin: 0; font-size: 18px; letter-spacing: 0.4px; }
+      header .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; }
+      header .brand img { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; box-shadow: 0 0 10px rgba(110,168,254,0.5); }
+      header .brand .dot { width: 10px; height: 10px; border-radius: 99px; background: linear-gradient(135deg, #8a5cff, #5cbcff); box-shadow: 0 0 16px rgba(140, 100, 255, 0.7); }
+      main { max-width: 1100px; margin: 20px auto; padding: 0 16px; }
+      .panel { background: linear-gradient(180deg, rgba(20,28,52,0.6), rgba(13,18,36,0.6)); border: 1px solid #1a2240; border-radius: 14px; box-shadow: 0 10px 40px rgba(0,0,0,0.35); }
+      .top { display: grid; grid-template-columns: 1fr 280px; gap: 16px; }
+      .sidebar { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+      .row { display: flex; gap: 8px; align-items: center; }
+      input[type=text] { flex: 1; padding: 10px 12px; border-radius: 10px; border: 1px solid #24305e; background: #0f1530; color: var(--text); outline: none; }
+      button { padding: 10px 14px; border-radius: 10px; border: 1px solid #24305e; background: #111a3a; color: var(--text); cursor: pointer; transition: transform 0.05s ease, background 0.2s ease; }
+      button:hover { background: #17224a; }
+      button:active { transform: translateY(1px); }
+      .players { display: grid; grid-template-columns: 1fr; gap: 8px; max-height: 380px; overflow: auto; padding-right: 6px; }
+      .players .item { display: flex; align-items: center; gap: 10px; padding: 8px; border: 1px solid #1a2240; border-radius: 8px; background: #0e1430; }
+      .players .swatch { width: 10px; height: 10px; border-radius: 99px; box-shadow: 0 0 8px rgba(255,255,255,0.2); }
+      canvas { width: 100%; height: 560px; display: block; border-radius: 14px; }
+      footer { text-align: center; color: #94a3b8; font-size: 12px; padding: 16px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand"><img src="/assets/pegasus-logo.png" alt="Pegasus logo" /><span class="dot"></span> PEGASUS – Web Tech & Full Stack Club</div>
+      <h1>Real‑time Arena</h1>
+    </header>
+    <main>
+      <div class="top">
+        <div class="panel" style="overflow:hidden">
+          <canvas id="game" width="1000" height="700"></canvas>
+        </div>
+        <aside class="panel sidebar">
+          <div class="row">
+            <input id="name" type="text" placeholder="Enter your name" maxlength="20" />
+            <button id="join">Join</button>
+          </div>
+          <div class="row" style="justify-content:space-between">
+            <div>Players online:</div>
+            <strong id="online">0</strong>
+          </div>
+          <div class="players" id="players"></div>
+          <div style="margin-top:auto; font-size:12px; color:#9aa7d8">WASD or Arrow Keys to move</div>
+        </aside>
+      </div>
+      <footer>Built for Pegasus Club · Socket.IO on Node.js</footer>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io({ transports: ['websocket', 'polling'] });
+
+      const canvas = document.getElementById('game');
+      const ctx = canvas.getContext('2d');
+      const joinBtn = document.getElementById('join');
+      const nameInput = document.getElementById('name');
+      const onlineEl = document.getElementById('online');
+      const playersEl = document.getElementById('players');
+
+      const me = { id: null, name: '', x: 0, y: 0, color: '#fff' };
+      const others = new Map();
+
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.strokeStyle = 'rgba(110,169,254,0.15)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+        for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+        ctx.restore();
+
+        for (const p of others.values()) { ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, 10, 0, Math.PI*2); ctx.fill(); }
+
+        if (me.id) { ctx.shadowColor = me.color; ctx.shadowBlur = 20; ctx.fillStyle = me.color; ctx.beginPath(); ctx.arc(me.x, me.y, 12, 0, Math.PI*2); ctx.fill(); ctx.shadowBlur = 0; }
+
+        requestAnimationFrame(render);
+      }
+      render();
+
+      joinBtn.addEventListener('click', () => {
+        const name = nameInput.value.trim() || 'Guest';
+        socket.emit('player:join', name);
+        nameInput.disabled = true; joinBtn.disabled = true;
+      });
+
+      socket.on('players:me', (p) => { me.id = p.id; me.name = p.name; me.x = p.x; me.y = p.y; me.color = p.color; });
+      socket.on('players:update', (list) => {
+        onlineEl.textContent = list.length;
+        playersEl.innerHTML = '';
+        const temp = new Map();
+        for (const p of list) { if (p.id === me.id) continue; temp.set(p.id, p);
+          const item = document.createElement('div'); item.className = 'item';
+          const sw = document.createElement('span'); sw.className = 'swatch'; sw.style.background = p.color;
+          const nm = document.createElement('span'); nm.textContent = p.name;
+          item.appendChild(sw); item.appendChild(nm); playersEl.appendChild(item); }
+        others.clear(); for (const [id, p] of temp) others.set(id, p);
+      });
+      socket.on('player:moved', (p) => { const who = others.get(p.id); if (!who) return; who.x = p.x; who.y = p.y; });
+
+      const pressed = new Set();
+      window.addEventListener('keydown', (e) => { pressed.add(e.key); });
+      window.addEventListener('keyup', (e) => { pressed.delete(e.key); });
+      function tick() {
+        if (!me.id) { requestAnimationFrame(tick); return; }
+        let dx = 0, dy = 0, speed = 4;
+        if (pressed.has('ArrowUp') || pressed.has('w')) dy -= speed;
+        if (pressed.has('ArrowDown') || pressed.has('s')) dy += speed;
+        if (pressed.has('ArrowLeft') || pressed.has('a')) dx -= speed;
+        if (pressed.has('ArrowRight') || pressed.has('d')) dx += speed;
+        if (dx !== 0 || dy !== 0) { me.x = Math.max(0, Math.min(1000, me.x + dx)); me.y = Math.max(0, Math.min(700, me.y + dy)); socket.emit('player:move', { dx, dy }); }
+        setTimeout(tick, 16);
+      }
+      tick();
+    </script>
+  </body>
+  </html>
+
+
+

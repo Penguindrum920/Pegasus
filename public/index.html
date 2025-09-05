@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pegasus</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+      :root { --bg: #0a0f1a; --text: #e4e8ff; --accent: #219797; --accent2: #219797; }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+      .scene { position: fixed; inset: 0; overflow: hidden; }
+      canvas#bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+      .center { position: relative; z-index: 2; height: 100%; display: grid; place-items: center; text-align: center; padding: 24px; }
+      
+      /* Logo entrance animation */
+      .logo { display: block; opacity: 0; transform: scale(0.8) translateY(30px); animation: logoReveal 1.2s ease-out 0.5s forwards; }
+      .logo img { height: 50vh; width: auto; max-width: 90vw; object-fit: contain; filter: drop-shadow(0 0 30px rgba(33,151,151,0.4)); }
+      @keyframes logoReveal { 
+        0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+        60% { opacity: 1; transform: scale(1.05) translateY(-5px); }
+        100% { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      
+      h1 { display:none; }
+      p.sub { display:none; }
+      .cta { margin-top: 26px; display: inline-flex; gap: 10px; opacity: 0; transform: translateY(20px); animation: ctaReveal 0.8s ease-out 1.5s forwards; }
+      @keyframes ctaReveal { to { opacity: 1; transform: translateY(0); } }
+      .cta a { text-decoration: none; color: white; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; padding: 12px 18px; border-radius: 12px; font-weight: 700; letter-spacing: 0.4px; box-shadow: 0 10px 30px rgba(110,168,254,0.25); transition: transform .15s ease, filter .2s ease; }
+      .cta a:hover { filter: brightness(1.05); }
+      .cta a:active { transform: translateY(1px); }
+      .fade-out { animation: fadeout .5s ease forwards; }
+      @keyframes fadeout { to { opacity: 0; transform: scale(0.98); } }
+    </style>
+  </head>
+  <body>
+    <div class="scene"><canvas id="bg"></canvas></div>
+    <div class="center" id="center">
+      <div class="logo">
+        <img src="/assets/pegasus-logo.png" alt="Pegasus logo" id="clubLogo" />
+      </div>
+      <div class="cta">
+        <a id="start" href="/members">Let's introduce you to the club members!</a>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="/galaxy.js"></script>
+  </body>
+  </html>
+
+
