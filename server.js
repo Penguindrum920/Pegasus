@@ -36,7 +36,15 @@ app.use(limiter);
 
 // Members route now served by Vite build output at /public/members
 const publicDir = path.join(__dirname, 'public');
-app.get(['/members', '/members/'], (_req, res) => {
+
+// Explicitly handle members route before static files
+app.get('/members', (_req, res) => {
+  console.log('Serving React members app');
+  res.sendFile(path.join(publicDir, 'members', 'index.html'));
+});
+
+app.get('/members/', (_req, res) => {
+  console.log('Serving React members app (with trailing slash)');
   res.sendFile(path.join(publicDir, 'members', 'index.html'));
 });
 

@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const center = document.getElementById('center');
       if (center) {
         center.classList.add('fade-out');
-        setTimeout(() => { window.location.href = '/members.html'; }, 380);
+        setTimeout(() => { window.location.href = '/members'; }, 380);
       }
     });
   }
