@@ -34,16 +34,16 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Static files
-const publicDir = path.join(__dirname, 'public');
-app.use(express.static(publicDir));
-// Serve Three.js locally to avoid CDN caching issues
-app.use('/vendor', express.static(path.join(__dirname, 'node_modules', 'three', 'build')));
-
 // Members route now served by Vite build output at /public/members
+const publicDir = path.join(__dirname, 'public');
 app.get(['/members', '/members/'], (_req, res) => {
   res.sendFile(path.join(publicDir, 'members', 'index.html'));
 });
+
+// Static files
+app.use(express.static(publicDir));
+// Serve Three.js locally to avoid CDN caching issues
+app.use('/vendor', express.static(path.join(__dirname, 'node_modules', 'three', 'build')));
 
 // Serve members assets
 app.use('/members/assets', express.static(path.join(publicDir, 'members', 'assets')));
