@@ -12,10 +12,10 @@ import SimpleMembersPlanets from './SimpleMembersPlanets'
 
 // Member data - using correct web paths and fixed names
 const members = [
-  { name: 'Savitha G', role: 'Teacher Coordinator', color: '#ff6b35', size: 3, distance: 0, isSun: true, image: 'Pegasus\public\savitha.jpg' },
-  { name: 'Kavish Narendra Raut', role: 'Club Head', color: '#4ecdc4', size: 1.2, distance: 25, image: 'Pegasus\public\kavish.jpg' },
-  { name: 'Hrudai Nirmal', role: 'Vice President', color: '#45b7d1', size: 1.1, distance: 35, image: 'Pegasus\public\hrudai.jpg' },
-  { name: 'Bhavani Krupakara', role: 'Vice President', color: '#96ceb4', size: 1.1, distance: 45, image: 'Pegasus\public\bhavani.jpg' },
+  { name: 'Savitha G', role: 'Teacher Coordinator', color: '#ff6b35', size: 3, distance: 0, isSun: true, image: '\Pegasus\public\savitha.jpg' },
+  { name: 'Kavish Narendra Raut', role: 'Club Head', color: '#4ecdc4', size: 1.2, distance: 25, image: '\Pegasus\public\kavish.jpg' },
+  { name: 'Hrudai Nirmal', role: 'Vice President', color: '#45b7d1', size: 1.1, distance: 35, image: '\Pegasus\public\hrudai.jpg' },
+  { name: 'Bhavani Krupakara', role: 'Vice President', color: '#96ceb4', size: 1.1, distance: 45, image: '\Pegasus\public\bhavani.jpg' },
   { name: 'Shivam', role: 'Technical Head', color: '#feca57', size: 1.0, distance: 55, image: 'Pegasus\public\shivam.jpg' },
   { name: 'Ayush Kumar', role: 'Technical Head', color: '#ff9ff3', size: 1.0, distance: 65, image: 'Pegasus\public\ayush.jpg' },
   { name: 'Aditya Kaushik', role: 'Design Head', color: '#54a0ff', size: 0.9, distance: 75, image: 'Pegasus\public\aditya.jpg' },
