@@ -18,10 +18,10 @@ const io = new Server(server, {
 
 // Middleware
 app.use(compression());
-app.use(helmet({
-  contentSecurityPolicy: false,
-  crossOriginEmbedderPolicy: false, // Add this line
-}));
+//app.use(helmet({
+//  contentSecurityPolicy: false,
+//  crossOriginEmbedderPolicy: false, // Add this line
+//}));
 app.use(cors());
 app.use(morgan('tiny'));
 
