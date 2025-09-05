@@ -13,7 +13,7 @@ import SimpleMembersPlanets from './SimpleMembersPlanets'
 // Member data - using correct web paths and fixed names
 const members = [
   { name: 'Savitha G', role: 'Teacher Coordinator', color: '#ff6b35', size: 3, distance: 0, isSun: true, image: 'public/savitha.jpg' },
-  { name: 'Kavish Narendra Raut', role: 'Club Head', color: '#4ecdc4', size: 1.2, distance: 25, image: '/kavish.jpg' },
+  { name: 'Kavish Narendra Raut', role: 'Club Head', color: '#4ecdc4', size: 1.2, distance: 25, image: 'public/kavish.jpg' },
   { name: 'Hrudai Nirmal', role: 'Vice President', color: '#45b7d1', size: 1.1, distance: 35, image: '/Hrudai.jpg' },
   { name: 'Bhavani Krupakara', role: 'Vice President', color: '#96ceb4', size: 1.1, distance: 45, image: '/bhavani.jpg' },
   { name: 'Shivam', role: 'Technical Head', color: '#feca57', size: 1.0, distance: 55, image: 'Pegasus\public\shivam.jpg' },
