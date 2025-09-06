@@ -166,6 +166,14 @@
 
     <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
     <script src="/galaxy.js"></script>
+    <script>
+  const menuButton = document.getElementById('menuButton');
+  
+  menuButton.addEventListener('click', () => {
+    // Toggles the .menu-open class on the body
+    document.body.classList.toggle('menu-open');
+  });
+</script>
   </body>
   </html>
 
