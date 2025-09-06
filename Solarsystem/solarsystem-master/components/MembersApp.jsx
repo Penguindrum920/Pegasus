@@ -13,10 +13,10 @@ const members = [
   { name: 'Shivam', role: 'Technical Head', color: '#feca57', size: 1.0, distance: 20 },
   { name: 'Ayush Kumar', role: 'Technical Head', color: '#ff9ff3', size: 1.0, distance: 24 },
   { name: 'Aditya Kaushik', role: 'Design Head', color: '#54a0ff', size: 0.9, distance: 28 },
-  { name: 'Reteash Reddy', role: 'Core Member', color: '#5f27cd', size: 0.8, distance: 32 },
+  { name: 'Rethash Reddy', role: 'Core Member', color: '#5f27cd', size: 0.8, distance: 32 },
   { name: 'Bhuvan', role: 'Core Member', color: '#00d2d3', size: 0.8, distance: 36 },
   { name: 'Bhargav', role: 'Core Member', color: '#ff6348', size: 0.8, distance: 40 },
-  { name: 'Tejes ng', role: 'Core Member', color: '#2ed573', size: 0.8, distance: 44 },
+  { name: 'Tejas NG', role: 'Core Member', color: '#2ed573', size: 0.8, distance: 44 },
 ]
 
 // Custom shader material for the sun
