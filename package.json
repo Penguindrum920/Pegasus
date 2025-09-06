@@ -20,6 +20,12 @@
     "helmet": "^8.1.0",
     "morgan": "^1.10.1",
     "socket.io": "^4.8.1",
+    "@react-three/drei": "^10.0.4",
+    "@react-three/fiber": "^9.1.0",
+    "r3f-perf": "^7.2.3",
+    "gsap": "^3.12.5",
+    "react": "19.0",
+    "react-dom": "19.0",
     "three": "^0.180.0"
   },
   "devDependencies": {
