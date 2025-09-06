@@ -9,5 +9,5 @@ export default defineConfig({
         outDir: resolve(__dirname, '../../public/members'),
         emptyOutDir: true,
     },
-    base: '/members/',
+    base: '/',
 })
