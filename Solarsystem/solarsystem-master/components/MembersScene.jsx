@@ -19,7 +19,7 @@ const members = [
   { name: 'Shivam', role: 'Technical Head', color: '#feca57', size: 1.0, distance: 55, image: '/assets/members/shivam.jpg' },
   { name: 'Ayush Kumar', role: 'Technical Head', color: '#ff9ff3', size: 1.0, distance: 65, image: '/assets/members/ayush.jpg' },
   { name: 'Aditya Kaushik', role: 'Design Head', color: '#54a0ff', size: 0.9, distance: 75, image: '/assets/members/aditya.jpg' },
-  { name: 'Retash Reddy', role: 'Core Member', color: '#5f27cd', size: 0.8, distance: 85, image: '/assets/members/retash.jpg' },
+  { name: 'Rethash Reddy', role: 'Core Member', color: '#5f27cd', size: 0.8, distance: 85, image: '/assets/members/retash.jpg' },
   { name: 'Bhuvan', role: 'Core Member', color: '#00d2d3', size: 0.8, distance: 95, image: '/assets/members/bhuvan.jpg' },
   { name: 'Bhargav', role: 'Core Member', color: '#ff6348', size: 0.8, distance: 105, image: '/assets/pegasus-logo.png' },
   { name: 'Tejas NG', role: 'Core Member', color: '#2ed573', size: 0.8, distance: 115, image: '/assets/members/tejas.jpg' },
