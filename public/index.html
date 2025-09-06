@@ -12,6 +12,74 @@
       :root { --bg: #0a0f1a; --text: #e4e8ff; --accent: #219797; --accent2: #219797; }
       * { box-sizing: border-box; }
       html, body { height: 100%; }
+      /* --- Cyberpunk Menu Animation --- */
+
+.menu-overlay a {
+  /* ... keep your existing styles ... */
+  position: relative; /* Required for the glitch effect */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.menu-overlay a:hover {
+  color: #fff; /* Make the main text white on hover */
+  text-shadow: 
+    0 0 5px #00f6ff,
+    0 0 10px #00f6ff,
+    0 0 20px #00f6ff; /* Neon cyan glow */
+}
+
+/* Create two pseudo-elements for the glitching text layers */
+.menu-overlay a::before,
+.menu-overlay a::after {
+  content: attr(data-text); /* Copy the text from the data-text attribute */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  overflow: hidden;
+  opacity: 0;
+}
+
+/* Style the first glitch layer (magenta) */
+.menu-overlay a:hover::before {
+  color: #ff00ff; /* Magenta */
+  opacity: 1;
+  transform: translate(2px, 2px);
+  animation: glitch 150ms infinite;
+}
+
+/* Style the second glitch layer (cyan) */
+.menu-overlay a:hover::after {
+  color: #00f6ff; /* Cyan */
+  opacity: 1;
+  transform: translate(-2px, -2px);
+  animation: glitch 150ms infinite reverse;
+}
+
+/* The glitch animation keyframes */
+@keyframes glitch {
+  0% {
+    clip-path: inset(15% 0 80% 0);
+  }
+  20% {
+    clip-path: inset(90% 0 5% 0);
+  }
+  40% {
+    clip-path: inset(40% 0 45% 0);
+  }
+  60% {
+    clip-path: inset(70% 0 10% 0);
+  }
+  80% {
+    clip-path: inset(25% 0 60% 0);
+  }
+  100% {
+    clip-path: inset(5% 0 90% 0);
+  }
+}
       body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
       .scene { position: fixed; inset: 0; overflow: hidden; }
       canvas#bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -146,13 +214,13 @@
     </button>
     
     <nav class="menu-overlay" id="menuOverlay">
-      <ul>
-        <li><a href="/members.html">Members</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">Socials</a></li>
-      </ul>
-    </nav>
+  <ul>
+    <li><a href="/members.html" data-text="Members">Members</a></li>
+    <li><a href="#" data-text="About Us">About Us</a></li>
+    <li><a href="#" data-text="Events">Events</a></li>
+    <li><a href="#" data-text="Socials">Socials</a></li>
+  </ul>
+</nav>
     <div class="scene"><canvas id="bg"></canvas></div>
     <div class="center" id="center">
       <div class="logo">
