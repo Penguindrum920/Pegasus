@@ -20,9 +20,9 @@ const members = [
   { name: 'Ayush Kumar', role: 'Technical Head', color: '#ff9ff3', size: 1.0, distance: 65, image: '/public/ayush.jpg' },
   { name: 'Aditya Kaushik', role: 'Design Head', color: '#54a0ff', size: 0.9, distance: 75, image: '/public/aditya.jpg' },
   { name: 'Rethash Reddy', role: 'Core Member', color: '#5f27cd', size: 0.8, distance: 85, image: '/public/retash.jpg' },
-  { name: 'Bhuvan', role: 'Core Member', color: '#00d2d3', size: 0.8, distance: 95, image: '/assets/members/bhuvan.jpg' },
-  { name: 'Bhargav', role: 'Core Member', color: '#ff6348', size: 0.8, distance: 105, image: '/assets/pegasus-logo.png' },
-  { name: 'Tejas NG', role: 'Core Member', color: '#2ed573', size: 0.8, distance: 115, image: '/assets/members/tejas.jpg' },
+  { name: 'Bhuvan', role: 'Core Member', color: '#00d2d3', size: 0.8, distance: 95, image: '/public/bhuvan.jpg' },
+  { name: 'Bhargav', role: 'Core Member', color: '#ff6348', size: 0.8, distance: 105, image: '/public/bhargav.png' },
+  { name: 'Tejas NG', role: 'Core Member', color: '#2ed573', size: 0.8, distance: 115, image: '/public/tejas.jpg' },
 ]
 
 function MemberOverlay({ member, onClose, isVisible, onPrevious, onNext, currentIndex, totalMembers }) {
