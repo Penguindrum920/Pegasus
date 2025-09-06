@@ -7,186 +7,25 @@
     <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
+      /* --- DEFINE YOUR CUSTOM FONT --- */
+      @font-face {
+        font-family: 'Plank';
+        src: url('/textures/PLANK___.TTF') format('truetype'); 
+        font-weight: normal;
+        font-style: normal;
+      }
+
       :root { --bg: #0a0f1a; --text: #e4e8ff; --accent: #219797; --accent2: #219797; }
       * { box-sizing: border-box; }
       html, body { height: 100%; }
-      /* --- Cyberpunk Menu Animation --- */
-
-.menu-overlay a {
-  /* ... keep your existing styles ... */
-  position: relative; /* Required for the glitch effect */
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.menu-overlay a:hover {
-  color: #fff; /* Make the main text white on hover */
-  text-shadow: 
-    0 0 5px #00f6ff,
-    0 0 10px #00f6ff,
-    0 0 20px #00f6ff; /* Neon cyan glow */
-}
-
-/* Create two pseudo-elements for the glitching text layers */
-.menu-overlay a::before,
-.menu-overlay a::after {
-  content: attr(data-text); /* Copy the text from the data-text attribute */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--bg);
-  overflow: hidden;
-  opacity: 0;
-}
-
-/* Style the first glitch layer (magenta) */
-.menu-overlay a:hover::before {
-  color: #ff00ff; /* Magenta */
-  opacity: 1;
-  transform: translate(2px, 2px);
-  animation: glitch 150ms infinite;
-}
-
-/* Style the second glitch layer (cyan) */
-.menu-overlay a:hover::after {
-  color: #00f6ff; /* Cyan */
-  opacity: 1;
-  transform: translate(-2px, -2px);
-  animation: glitch 150ms infinite reverse;
-}
-
-/* The glitch animation keyframes */
-@keyframes glitch {
-  0% {
-    clip-path: inset(15% 0 80% 0);
-  }
-  20% {
-    clip-path: inset(90% 0 5% 0);
-  }
-  40% {
-    clip-path: inset(40% 0 45% 0);
-  }
-  60% {
-    clip-path: inset(70% 0 10% 0);
-  }
-  80% {
-    clip-path: inset(25% 0 60% 0);
-  }
-  100% {
-    clip-path: inset(5% 0 90% 0);
-  }
-}
       body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+      
+      /* --- SCENE & LOGO STYLES --- */
       .scene { position: fixed; inset: 0; overflow: hidden; }
       canvas#bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
       .center { position: relative; z-index: 2; height: 100%; display: grid; place-items: center; text-align: center; padding: 24px; }
-      /* ADD THIS CSS TO YOUR EXISTING <style> TAG */
-
-/* --- Hamburger Menu Button --- */
-.menu-button {
-  position: fixed;
-  top: 24px;
-  right: 24px;
-  z-index: 101; /* Higher than other content */
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 32px;
-  height: 24px;
-  padding: 0;
-}
-
-.menu-button span {
-  width: 100%;
-  height: 3px;
-  background: var(--text);
-  border-radius: 3px;
-  transition: all 0.3s ease-in-out;
-  transform-origin: center;
-}
-
-/* Animation for button -> X */
-.menu-open .menu-button span:nth-child(1) {
-  transform: translateY(10px) rotate(45deg);
-}
-
-.menu-open .menu-button span:nth-child(2) {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-
-.menu-open .menu-button span:nth-child(3) {
-  transform: translateY(-10px) rotate(-45deg);
-}
-
-/* --- Menu Overlay --- */
-.menu-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: rgba(10, 15, 26, 0.85);
-  backdrop-filter: blur(10px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(1.1);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.menu-open .menu-overlay {
-  opacity: 1;
-  pointer-events: all;
-  transform: scale(1);
-}
-
-.menu-overlay ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  text-align: center;
-}
-
-.menu-overlay li {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* Staggered animation for links */
-.menu-open .menu-overlay li {
-  opacity: 1;
-  transform: translateY(0);
-}
-.menu-open .menu-overlay li:nth-child(1) { transition-delay: 0.2s; }
-.menu-open .menu-overlay li:nth-child(2) { transition-delay: 0.3s; }
-.menu-open .menu-overlay li:nth-child(3) { transition-delay: 0.4s; }
-.menu-open .menu-overlay li:nth-child(4) { transition-delay: 0.5s; }
-
-
-.menu-overlay a {
-  display: inline-block;
-  padding: 20px;
-  font-size: 2.5em; /* Larger text for overlay */
-  font-weight: 800;
-  color: var(--text);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.menu-overlay a:hover {
-  color: var(--accent);
-}
-      /* Logo entrance animation */
       .logo { display: block; opacity: 0; transform: scale(0.8) translateY(30px); animation: logoReveal 1.2s ease-out 0.5s forwards; }
       .logo img { height: 50vh; width: auto; max-width: 90vw; object-fit: contain; filter: drop-shadow(0 0 30px rgba(33,151,151,0.4)); }
       @keyframes logoReveal { 
@@ -195,15 +34,79 @@
         100% { opacity: 1; transform: scale(1) translateY(0); }
       }
       
-      h1 { display:none; }
-      p.sub { display:none; }
+      /* --- CTA BUTTON STYLES --- */
       .cta { margin-top: 26px; display: inline-flex; gap: 10px; opacity: 0; transform: translateY(20px); animation: ctaReveal 0.8s ease-out 1.5s forwards; }
       @keyframes ctaReveal { to { opacity: 1; transform: translateY(0); } }
-      .cta a { text-decoration: none; color: white; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; padding: 12px 18px; border-radius: 12px; font-weight: 700; letter-spacing: 0.4px; box-shadow: 0 10px 30px rgba(110,168,254,0.25); transition: transform .15s ease, filter .2s ease; }
+      .cta a { text-decoration: none; color: white; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: none; padding: 12px 18px; border-radius: 12px; font-weight: 700; letter-spacing: 0.4px; box-shadow: 0 10px 30px rgba(33,151,151,0.25); transition: transform .15s ease, filter .2s ease; }
       .cta a:hover { filter: brightness(1.05); }
       .cta a:active { transform: translateY(1px); }
       .fade-out { animation: fadeout .5s ease forwards; }
       @keyframes fadeout { to { opacity: 0; transform: scale(0.98); } }
+
+      /* --- HAMBURGER MENU BUTTON --- */
+      .menu-button { position: fixed; top: 24px; right: 24px; z-index: 101; background: transparent; border: none; cursor: pointer; display: flex; flex-direction: column; justify-content: space-around; width: 32px; height: 24px; padding: 0; }
+      .menu-button span { width: 100%; height: 3px; background: var(--text); border-radius: 3px; transition: all 0.3s ease-in-out; transform-origin: center; }
+      .menu-open .menu-button span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+      .menu-open .menu-button span:nth-child(2) { opacity: 0; transform: translateX(-20px); }
+      .menu-open .menu-button span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+      /* --- MENU OVERLAY & LINKS --- */
+      .menu-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(10, 15, 26, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transform: scale(1.1); transition: opacity 0.4s ease, transform 0.4s ease; }
+      .menu-open .menu-overlay { opacity: 1; pointer-events: all; transform: scale(1); }
+      .menu-overlay ul { list-style: none; padding: 0; margin: 0; text-align: center; }
+      .menu-overlay li { opacity: 0; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease; }
+      .menu-open .menu-overlay li { opacity: 1; transform: translateY(0); }
+      .menu-open .menu-overlay li:nth-child(1) { transition-delay: 0.2s; }
+      .menu-open .menu-overlay li:nth-child(2) { transition-delay: 0.3s; }
+      .menu-open .menu-overlay li:nth-child(3) { transition-delay: 0.4s; }
+      .menu-open .menu-overlay li:nth-child(4) { transition-delay: 0.5s; }
+
+      /* --- CYBERPUNK FONT & ANIMATION FOR MENU LINKS --- */
+      .menu-overlay a {
+        display: inline-block;
+        padding: 20px;
+        font-family: 'Plank', sans-serif; /* Using your custom font */
+        font-size: 2.8em;
+        color: var(--text);
+        text-decoration: none;
+        text-transform: uppercase;
+        position: relative;
+        transition: color 0.2s ease;
+      }
+      .menu-overlay a:hover {
+        color: #fff;
+        text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent), 0 0 20px var(--accent);
+      }
+      .menu-overlay a::before,
+      .menu-overlay a::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        overflow: hidden;
+        opacity: 0;
+      }
+      .menu-overlay a:hover::before {
+        color: #ff00ff;
+        opacity: 1;
+        animation: glitch 150ms infinite;
+      }
+      .menu-overlay a:hover::after {
+        color: #00f6ff;
+        opacity: 1;
+        animation: glitch 150ms infinite reverse;
+      }
+      @keyframes glitch {
+        0% { clip-path: inset(15% 0 80% 0); transform: translate(-2px, 1px); }
+        20% { clip-path: inset(90% 0 5% 0); transform: translate(2px, -1px); }
+        40% { clip-path: inset(40% 0 45% 0); transform: translate(-1px, 2px); }
+        60% { clip-path: inset(70% 0 10% 0); transform: translate(1px, -2px); }
+        80% { clip-path: inset(25% 0 60% 0); transform: translate(-2px, 1px); }
+        100% { clip-path: inset(5% 0 90% 0); transform: translate(2px, -1px); }
+      }
     </style>
   </head>
   <body>
@@ -212,37 +115,35 @@
       <span></span>
       <span></span>
     </button>
-    
     <nav class="menu-overlay" id="menuOverlay">
-  <ul>
-    <li><a  href="/members" data-text="Members">Members</a></li>
-    <li><a href="#" data-text="About Us">About Us</a></li>
-    <li><a href="#" data-text="Events">Events</a></li>
-    <li><a href="#" data-text="Socials">Socials</a></li>
-  </ul>
-</nav>
+      <ul>
+        <li><a href="/members.html" data-text="Members">Members</a></li>
+        <li><a href="#" data-text="About Us">About Us</a></li>
+        <li><a href="#" data-text="Events">Events</a></li>
+        <li><a href="#" data-text="Socials">Socials</a></li>
+      </ul>
+    </nav>
+    
     <div class="scene"><canvas id="bg"></canvas></div>
     <div class="center" id="center">
       <div class="logo">
         <img src="/assets/pegasus-logo.png" alt="Pegasus logo" id="clubLogo" />
       </div>
       <div class="cta">
-        <a id="start" href="/members">Let's introduce you to the club members!</a>
+        <a id="start" href="/members.html">Let's introduce you to the club members!</a>
         <a id="trivia" href="/trivia.html">Click here for trivia!</a>
       </div>
     </div>
 
-    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
     <script src="/galaxy.js"></script>
-    <script>
-  const menuButton = document.getElementById('menuButton');
-  
-  menuButton.addEventListener('click', () => {
-    // Toggles the .menu-open class on the body
-    document.body.classList.toggle('menu-open');
-  });
-</script>
-  </body>
-  </html>
 
+    <script>
+      const menuButton = document.getElementById('menuButton');
+      menuButton.addEventListener('click', () => {
+        document.body.classList.toggle('menu-open');
+      });
+    </script>
+  </body>
+</html>
 
