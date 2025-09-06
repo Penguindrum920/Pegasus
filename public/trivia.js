@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io("https://pegasus-delta.vercel.app");
 
 // UI Elements
 const questionCountEl = document.getElementById('question-count');
