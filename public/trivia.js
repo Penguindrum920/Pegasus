@@ -1,4 +1,4 @@
-const socket = io("https://pegasus-delta.vercel.app");
+const socket = io("https://pegasus-delta.vercel.app"); // This is the corrected line
 
 // UI Elements
 const questionCountEl = document.getElementById('question-count');
