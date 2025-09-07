@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pegasus Events</title>
+    <style>
+        /* FONT IMPORTS */
+        @import url('https://fonts.cdnfonts.com/css/ica-rubrik-black');
+        @import url('https://fonts.cdnfonts.com/css/poppins');
+
+        /* GENERAL STYLING */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(4, 5, 14); /* Changed background color */
+            background-image:
+                repeating-linear-gradient(
+                    to right, transparent 0 100px,
+                    rgba(186, 202, 214, 0.05) 100px 101px /* Changed grid line color */
+                ),
+                repeating-linear-gradient(
+                    to bottom, transparent 0 100px,
+                    rgba(186, 202, 214, 0.05) 100px 101px /* Changed grid line color */
+                );
+            font-family: 'Poppins', sans-serif;
+            color: rgb(186, 202, 214); /* Changed default text color */
+        }
+
+        /* The ::before pseudo-element for the background image has been removed */
+
+        /* BANNER & SLIDER STYLING */
+        .banner {
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .banner .slider {
+            position: absolute;
+            width: 200px;
+            height: 250px;
+            top: 10%;
+            left: calc(50% - 100px);
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            animation: autoRun 20s linear infinite;
+            z-index: 2;
+        }
+
+        @keyframes autoRun {
+            from {
+                transform: perspective(1000px) rotateX(-16deg) rotateY(0deg);
+            }
+            to {
+                transform: perspective(1000px) rotateX(-16deg) rotateY(360deg);
+            }
+        }
+
+        .banner .slider .item {
+            position: absolute;
+            inset: 0;
+            transform:
+                rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+                translateZ(550px);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .banner .slider .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* CONTENT AREA STYLING */
+        .banner .content {
+            position: absolute;
+            top: 60%; /* Moves the content block vertically lower */
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centers the block */
+            width: 90%;
+            max-width: 1200px;
+            height: max-content;
+            padding-bottom: 50px;
+            display: block; /* Changed from flex */
+            text-align: center; /* Center all child text */
+            z-index: 1;
+        }
+
+        .banner .content h1 {
+            font-family: 'ICA Rubrik', sans-serif;
+            font-size: 9em; /* Reduced font size */
+            line-height: 1em;
+            color: rgb(186, 202, 214); /* Changed text color */
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .banner .content h1::after {
+            position: absolute;
+            inset: 0 0 0 0;
+            content: attr(data-content);
+            z-index: 2;
+            -webkit-text-stroke: 2px rgba(186, 202, 214, 0.5); /* Changed stroke color */
+            color: transparent;
+            padding: 0 20px;
+        }
+
+        .banner .content .author {
+            font-family: 'Poppins', sans-serif;
+            text-align: center; /* Changed from right */
+            max-width: 500px; /* Increased max-width for centering */
+            padding: 0 20px;
+            margin: 20px auto 0; /* Add margin for spacing */
+        }
+
+        .banner .content .author h2 {
+            font-size: 2.5em; /* Adjusted */
+        }
+        .banner .content .author p {
+            font-size: 0.9em;
+            color: rgba(186, 202, 214, 0.8); /* Changed paragraph color */
+        }
+
+        /* The .model class for the background model image has been removed */
+
+        /* NAVIGATION BUTTONS */
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-buttons button {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 2px solid rgb(186, 202, 214); /* Changed border color */
+            background-color: rgba(186, 202, 214, 0.1); /* Changed background color */
+            color: rgb(186, 202, 214); /* Changed text color */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-buttons button:hover {
+            background-color: rgb(186, 202, 214); /* Changed hover background */
+            color: rgb(4, 5, 14); /* Changed hover text color */
+            transform: translateY(-3px);
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media screen and (max-width: 1023px) {
+            .banner .slider {
+                width: 160px;
+                height: 200px;
+                left: calc(50% - 80px);
+            }
+            .banner .slider .item {
+                transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(300px);
+            }
+            .banner .content {
+                padding-bottom: 150px; /* Make space for buttons */
+                top: 55%; /* Adjust vertical position for tablets */
+            }
+            .banner .content h1 {
+                text-align: center;
+                width: 100%;
+                font-size: 7em;
+            }
+            .banner .content .author {
+                max-width: unset;
+                width: 100%;
+                text-align: center;
+                padding: 20px 30px 0;
+                color: rgb(186, 202, 214); /* Updated for dark theme */
+                text-shadow: 0 5px 10px #0009;
+                z-index: 2;
+            }
+             .banner .content .author p {
+                color: rgba(186, 202, 214, 0.8); /* Updated for dark theme */
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .banner .slider {
+                width: 100px;
+                height: 150px;
+                left: calc(50% - 50px);
+            }
+            .banner .slider .item {
+                transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(180px);
+            }
+            .banner .content h1 {
+                font-size: 5em;
+            }
+             .banner .content .author h2{
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner">
+        <!-- The slider div will be populated dynamically by JavaScript -->
+        <div class="slider"></div>
+
+        <div class="content">
+            <h1 id="event-title" data-content="EVENT TITLE">EVENT TITLE</h1>
+            <div class="author">
+                <h2 id="event-author">AUTHOR</h2>
+                <p id="event-description">Description of the event goes here.</p>
+            </div>
+            <!-- The model div has been removed -->
+        </div>
+        
+        <div class="nav-buttons">
+            <button id="prevBtn">&lt; Prev Event</button>
+            <button id="nextBtn">Next Event &gt;</button>
+        </div>
+    </div>
+    
+    <script>
+        // --- 1. DATA FOR OUR EVENTS ---
+        const events = [
+            {
+                title: "Robofiesta",
+                author: "Annual Tech Fest",
+                description: "Our flagship event featuring robotics competitions, workshops, and tech talks from industry experts.",
+                images: [
+                    "Phoenix Hacks/1.jpg",
+                    'Phoenix Hacks/2.jpg',
+                    'Phoenix Hacks/3.jpg',
+                    'Phoenix Hacks/4.jpg',
+                    'Phoenix Hacks/5.jpg',
+                    'Phoenix Hacks/6.jpg'
+                ]
+            },
+            {
+                title: "Phoenix Hacks",
+                author: "24-Hour Hackathon",
+                description: "A thrilling coding marathon where teams collaborate to build innovative solutions to real-world problems.",
+                images: [
+                    "Phoenix Hacks/1.jpg",
+                    'Phoenix Hacks/2.jpg',
+                    'Phoenix Hacks/3.jpg',
+                    'Phoenix Hacks/4.jpg',
+                    'Phoenix Hacks/5.jpg',
+                    'Phoenix Hacks/6.jpg'
+                ]
+            },
+            {
+                title: "2024 Induction",
+                author: "New Batch Welcome",
+                description: "Welcoming the brightest new minds to our club with fun activities, introductions, and a look at the year ahead.",
+                images: [
+                    '2024induction/1.webp',
+                    '2024induction/2.webp',
+                    '2024induction/3.webp',
+                    '2024induction/4.webp',
+                    '2024induction/5.webp'
+                ]
+            },
+            {
+                title: "HTML/CSS Workshop",
+                author: "Web Dev Basics",
+                description: "A hands-on session for beginners to learn the fundamental building blocks of the web.",
+                images: [
+                    'html/1.webp',
+                    'html/2.webp',
+                    'html/3.webp'
+                ]
+            }
+        ];
+
+        // --- 2. STATE & DOM REFERENCES ---
+        let currentEventIndex = 0;
+        const slider = document.querySelector('.slider');
+        const eventTitle = document.getElementById('event-title');
+        const eventAuthor = document.getElementById('event-author');
+        const eventDescription = document.getElementById('event-description');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // --- 3. CORE FUNCTION TO UPDATE THE SLIDER & CONTENT ---
+        function updateEvent(index) {
+            const event = events[index];
+
+            // Update text content
+            eventTitle.textContent = event.title;
+            eventTitle.dataset.content = event.title; // Update data-content for the stroke effect
+            eventAuthor.textContent = event.author;
+            eventDescription.textContent = event.description;
+            
+            // Clear the old slider items
+            slider.innerHTML = '';
+
+            // Set the CSS --quantity variable for correct spacing
+            slider.style.setProperty('--quantity', event.images.length);
+
+            // Create and append new slider items
+            event.images.forEach((imageUrl, i) => {
+                const item = document.createElement('div');
+                item.classList.add('item');
+                item.style.setProperty('--position', i + 1);
+
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = `${event.title} photo ${i + 1}`;
+
+                item.appendChild(img);
+                slider.appendChild(item);
+            });
+        }
+
+        // --- 4. EVENT LISTENERS FOR BUTTONS ---
+        nextBtn.addEventListener('click', () => {
+            currentEventIndex = (currentEventIndex + 1) % events.length; // Loop back to start
+            updateEvent(currentEventIndex);
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentEventIndex = (currentEventIndex - 1 + events.length) % events.length; // Loop back to end
+            updateEvent(currentEventIndex);
+        });
+
+        // --- 5. INITIAL LOAD ---
+        // Load the first event when the page opens
+        updateEvent(currentEventIndex);
+    </script>
+</body>
+</html>
+
+
+
