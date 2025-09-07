@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pegasus Socials</title>
+    <style>
+        /* FONT IMPORT - A classic monospaced font */
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        /* GENERAL STYLING */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #00ff41;
+            font-family: 'VT323', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41;
+            overflow: hidden;
+        }
+
+        /* TERMINAL & BOOT-UP SEQUENCE */
+        .terminal {
+            width: 100%;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        .terminal p {
+            margin: 0 0 5px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            font-size: 1.1rem; /* Slightly increased size */
+        }
+        
+        /* Blinking cursor effect */
+        .cursor {
+            display: inline-block;
+            background-color: #00ff41;
+            width: 10px;
+            height: 1.2em;
+            animation: blink 1s step-end infinite;
+            margin-left: 5px;
+            box-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41;
+        }
+
+        @keyframes blink {
+            from, to { background-color: transparent; }
+            50% { background-color: #00ff41; }
+        }
+
+        /* SOCIALS CONTAINER */
+        .socials-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap; /* Allows wrapping on smaller screens */
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* QR CODE STYLING */
+        .qr-link {
+            text-decoration: none;
+            color: #00ff41;
+            text-align: center;
+            width: 300px; /* Increased width to accommodate larger text */
+        }
+
+        .qr-code-wrapper {
+            position: relative;
+            width: 220px; /* Increased size */
+            height: 220px; /* Increased size */
+            margin: 0 auto 15px; /* Center the QR code */
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .qr-link.focused .qr-code-wrapper {
+            border-color: #00ff41;
+            box-shadow: 0 0 10px #00ff41;
+        }
+
+        .qr-ascii, .qr-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+
+        .qr-image {
+            opacity: 0;
+        }
+        
+        .qr-link.focused .qr-ascii { opacity: 0; }
+        .qr-link.focused .qr-image { opacity: 1; }
+
+        /* GLITCH ANIMATION */
+        .qr-ascii {
+            animation: glitch 1.5s linear infinite;
+        }
+
+        @keyframes glitch {
+            2%, 64% { transform: translate(2px, 0) skew(0deg); }
+            4%, 60% { transform: translate(-2px, 0) skew(0deg); }
+            62% { transform: translate(0, 0) skew(5deg); }
+        }
+
+        .qr-label {
+            font-size: 2.2rem; /* Significantly increased heading size */
+            margin-bottom: 15px; /* Added more space below heading */
+        }
+
+        .qr-prompt {
+            font-size: 1.1rem; /* Slightly increased size */
+            height: 20px; /* Reserve space to prevent layout shift */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .qr-link.focused .qr-prompt {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal" id="terminal">
+        <!-- Boot-up text will be generated here by JavaScript -->
+    </div>
+
+    <div class="socials-container" id="socials">
+        <!-- Instagram QR Code -->
+        <a href="https://www.instagram.com/your_username" target="_blank" class="qr-link" id="insta-link">
+            <h2 class="qr-label">INSTAGRAM</h2>
+            <div class="qr-code-wrapper">
+                <!-- Corrected path with forward slashes -->
+                <img src="qrs/insta_pixel.png" alt="Instagram QR Code ASCII Art" class="qr-ascii">
+                <img src="qrs/pegasusinstaqr.jpg" alt="Instagram QR Code" class="qr-image">
+            </div>
+            <p class="qr-prompt">[ SCAN OR TAP AGAIN TO VISIT ]</p>
+        </a>
+
+        <!-- WhatsApp QR Code -->
+        <a href="https://chat.whatsapp.com/your_group_invite" target="_blank" class="qr-link" id="whatsapp-link">
+            <h2 class="qr-label">WHATSAPP</h2>
+            <div class="qr-code-wrapper">
+                 <!-- Corrected path with forward slashes -->
+                <img src="qrs/whatsapp_pixel.png" alt="WhatsApp QR Code ASCII Art" class="qr-ascii">
+                <img src="qrs/pegasuswhatsappqr.jpg" alt="WhatsApp QR Code" class="qr-image">
+            </div>
+            <p class="qr-prompt">[ SCAN OR TAP AGAIN TO VISIT ]</p>
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const terminal = document.getElementById('terminal');
+            const socialsContainer = document.getElementById('socials');
+
+            // --- DATA ---
+            const bootUpLines = [
+                'INITIALIZING PEGASUS NETWORK...',
+                'ACCESSING SECURE SERVER... CONNECTION ESTABLISHED.',
+                'COMPILING SOCIAL LINKS... DONE.',
+                'RENDERING QR INTERFACE... SUCCESS.',
+                'AWAITING USER INPUT.'
+            ];
+
+            const socialLinks = {
+                insta: document.getElementById('insta-link'),
+                whatsapp: document.getElementById('whatsapp-link')
+            };
+
+            let focusedLink = null;
+
+            // --- BOOT-UP SEQUENCE ---
+            let lineIndex = 0;
+            function typeLine() {
+                if (lineIndex < bootUpLines.length) {
+                    const line = bootUpLines[lineIndex];
+                    const p = document.createElement('p');
+                    terminal.appendChild(p);
+                    
+                    let charIndex = 0;
+                    const interval = setInterval(() => {
+                        if (charIndex < line.length) {
+                            p.textContent += line[charIndex];
+                            charIndex++;
+                        } else {
+                            clearInterval(interval);
+                            lineIndex++;
+                            // Add cursor to the last line
+                            if (lineIndex === bootUpLines.length) {
+                                const cursor = document.createElement('span');
+                                cursor.className = 'cursor';
+                                p.appendChild(cursor);
+                                // Show the QR codes after the animation
+                                socialsContainer.style.opacity = 1;
+                            }
+                            typeLine();
+                        }
+                    }, 50); // Speed of typing
+                }
+            }
+
+            // --- INTERACTION LOGIC ---
+            function handleLinkClick(event, linkElement) {
+                event.preventDefault(); // Always stop the first click
+
+                if (focusedLink === linkElement) {
+                    // This is the second click on the focused link
+                    window.open(linkElement.href, '_blank');
+                } else {
+                    // This is the first click, or clicking a different link
+                    // Unfocus any previously focused link
+                    if (focusedLink) {
+                        focusedLink.classList.remove('focused');
+                    }
+                    // Focus the new one
+                    linkElement.classList.add('focused');
+                    focusedLink = linkElement;
+                }
+            }
+
+            socialLinks.insta.addEventListener('click', (e) => handleLinkClick(e, socialLinks.insta));
+            socialLinks.whatsapp.addEventListener('click', (e) => handleLinkClick(e, socialLinks.whatsapp));
+
+            // Start the boot-up animation
+            typeLine();
+        });
+    </script>
+
+</body>
+</html>
+
