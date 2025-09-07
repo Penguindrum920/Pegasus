@@ -23,6 +23,7 @@ const members = [
   { name: 'Bhuvan', role: 'Core Member', color: '#00d2d3', size: 0.8, distance: 95, image: '/public/bhuvan.jpg' },
   { name: 'Bhargav', role: 'Core Member', color: '#ff6348', size: 0.8, distance: 105, image: '/public/bhargav.png' },
   { name: 'Tejas NG', role: 'Core Member', color: '#2ed573', size: 0.8, distance: 115, image: '/public/tejas.jpg' },
+  { name: 'Angil Jain', role: 'Core Member', color: '#2ed573', size: 0.9, distance: 48, image: '/public/angil.jpg'}
 ]
 
 function MemberOverlay({ member, onClose, isVisible, onPrevious, onNext, currentIndex, totalMembers }) {
