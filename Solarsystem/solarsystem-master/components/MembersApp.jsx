@@ -17,6 +17,7 @@ const members = [
   { name: 'Bhuvan', role: 'Core Member', color: '#00d2d3', size: 0.8, distance: 36 },
   { name: 'Bhargav', role: 'Core Member', color: '#ff6348', size: 0.8, distance: 40 },
   { name: 'Tejas NG', role: 'Core Member', color: '#2ed573', size: 0.8, distance: 44 },
+  { name: 'Angil Jain', role: 'Core Member', color: '#2ed573', size: 0.9, distance: 48 }
 ]
 
 // Custom shader material for the sun
