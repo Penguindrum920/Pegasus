@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Flappy Bird</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            background-color: #111;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #board-container {
+            position: relative;
+            width: 360px;
+            height: 640px;
+        }
+
+        #board {
+            background-image: url("pics/flappybirdbg.png"); /* Placeholder background */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #startScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        #startScreen h2 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        
+        #startScreen p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        #retryButton {
+            display: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 15px 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: 3px solid white;
+            background-color: #ff6347;
+            color: white;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        #retryButton:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+<body>
+    <div id="board-container">
+        <div id="startScreen">
+            <h2>Flappy Bird</h2>
+            <p id="loading-text">Loading Assets...</p>
+        </div>
+        <canvas id="board"></canvas>
+    </div>
+    <button id="retryButton">RETRY</button>
+
+    <script>
+        // --- GAME SETUP ---
+        const board = document.getElementById("board");
+        const boardWidth = 360;
+        const boardHeight = 640;
+        board.height = boardHeight;
+        board.width = boardWidth;
+        const context = board.getContext("2d");
+
+        // --- BIRD ---
+        const birdWidth = 34;
+        const birdHeight = 24;
+        let bird = {
+            x: boardWidth / 8,
+            y: boardHeight / 2,
+            width: birdWidth,
+            height: birdHeight
+        };
+
+        // --- PIPES ---
+        let pipeArray = [];
+        const pipeWidth = 64;
+        const pipeHeight = 512;
+        const pipeX = boardWidth;
+        const pipeY = 0;
+
+        // --- PHYSICS & STATE ---
+        const velocityX = -2;
+        let velocityY = 0;
+        const gravity = 0.4;
+        let gameOver = false;
+        let gameStarted = false;
+        let score = 0;
+        let highScore = localStorage.getItem("flappybird-highscore") || 0;
+
+        // --- ASSETS ---
+        let birdImg, topPipeImg, bottomPipeImg;
+
+        // --- ASSET LOADER ---
+        const imageSources = {
+            bird: "pics/flappybird.png", // Replace with your bird.png path
+            topPipe: "pics/toppipe.png", // Replace with your toppipe.png path
+            bottomPipe: "pics/bottompipe.png" // Replace with your bottompipe.png path
+        };
+
+        let imagesLoaded = 0;
+        const totalImages = Object.keys(imageSources).length;
+
+        function loadImages() {
+            birdImg = new Image();
+            topPipeImg = new Image();
+            bottomPipeImg = new Image();
+
+            birdImg.src = imageSources.bird;
+            topPipeImg.src = imageSources.topPipe;
+            bottomPipeImg.src = imageSources.bottomPipe;
+
+            birdImg.onload = topPipeImg.onload = bottomPipeImg.onload = () => {
+                imagesLoaded++;
+                if (imagesLoaded === totalImages) {
+                    // All images are loaded, ready to start.
+                    document.getElementById('loading-text').innerText = 'Click to Start';
+                    document.getElementById('startScreen').addEventListener('click', startGame);
+                }
+            };
+
+            birdImg.onerror = topPipeImg.onerror = bottomPipeImg.onerror = () => {
+                document.getElementById('loading-text').innerText = 'Error loading images!';
+            };
+        }
+
+        // --- GAME LOGIC ---
+        function startGame() {
+            if (gameStarted) return;
+            gameStarted = true;
+            document.getElementById('startScreen').style.display = 'none';
+            document.addEventListener("keydown", moveBird);
+            document.addEventListener("touchstart", moveBird);
+            document.getElementById('retryButton').addEventListener('click', resetGame);
+            requestAnimationFrame(update);
+            setInterval(placePipes, 1500);
+        }
+
+        function update() {
+            if (gameOver) return;
+            requestAnimationFrame(update);
+
+            context.clearRect(0, 0, board.width, board.height);
+
+            // Bird
+            velocityY += gravity;
+            bird.y = Math.max(bird.y + velocityY, 0);
+            context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+
+            if (bird.y > board.height) {
+                endGame();
+            }
+
+            // Pipes
+            for (let i = 0; i < pipeArray.length; i++) {
+                let pipe = pipeArray[i];
+                pipe.x += velocityX;
+                context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
+
+                if (!pipe.passed && bird.x > pipe.x + pipe.width) {
+                    score += 0.5;
+                    pipe.passed = true;
+                }
+                if (detectCollision(bird, pipe)) {
+                    endGame();
+                }
+            }
+
+            while (pipeArray.length > 0 && pipeArray[0].x < -pipeWidth) {
+                pipeArray.shift();
+            }
+
+            // Score
+            context.fillStyle = "white";
+            context.font = "45px sans-serif";
+            context.fillText(score, 5, 45);
+        }
+
+        function placePipes() {
+            if (gameOver || !gameStarted) return;
+            let randomPipeY = pipeY - pipeHeight / 4 - Math.random() * (pipeHeight / 2);
+            let openingSpace = board.height / 4;
+
+            pipeArray.push({ img: topPipeImg, x: pipeX, y: randomPipeY, width: pipeWidth, height: pipeHeight, passed: false });
+            pipeArray.push({ img: bottomPipeImg, x: pipeX, y: randomPipeY + pipeHeight + openingSpace, width: pipeWidth, height: pipeHeight, passed: false });
+        }
+
+        function moveBird(e) {
+            if (e.code === "Space" || e.type === "touchstart") e.preventDefault();
+            velocityY = -6;
+        }
+
+        function detectCollision(a, b) {
+            return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
+        }
+
+        function endGame() {
+            if (gameOver) return;
+            gameOver = true;
+
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem("flappybird-highscore", highScore);
+            }
+
+            context.fillStyle = "white";
+            context.font = "bold 45px sans-serif";
+            context.fillText("GAME OVER", 60, boardHeight / 2 - 50);
+            context.font = "30px sans-serif";
+            context.fillText(`High Score: ${highScore}`, 80, boardHeight / 2);
+
+            document.getElementById('retryButton').style.display = 'block';
+        }
+
+        function resetGame() {
+            bird.y = boardHeight / 2;
+            pipeArray = [];
+            score = 0;
+            velocityY = 0;
+            gameOver = false;
+            document.getElementById('retryButton').style.display = 'none';
+            requestAnimationFrame(update);
+        }
+
+        // --- INITIALIZE ---
+        window.onload = loadImages;
+    </script>
+</body>
+</html>
