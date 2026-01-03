@@ -160,7 +160,12 @@ const Hero = () => {
           />
         </div>
 
-        <div className="absolute left-0 top-0 z-40 size-full">
+        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-50 text-blue-75">
+          Pegasu<b>s</b>
+        </h1>
+
+        <div className="absolute left-0 top-0 z-40 size-full pointer-events-none">
+          <div className="mt-24 px-5 sm:px-10 pointer-events-auto">
           <div className="mt-24 px-5 sm:px-10">
             <h1 className="special-font hero-heading text-blue-100">
               Web Dev Clu<b>b</b>
@@ -180,6 +185,10 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 z-50 text-violet-300">
+        Pegasu<b>s</b>
+      </h1>
     </div>
   );
 };
