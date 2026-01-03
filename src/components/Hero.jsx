@@ -20,30 +20,37 @@ const Hero = () => {
   const nextVdRef = useRef(null);
   const videoRefs = useRef([]);
 
-  // Preload all videos
+  // Preload all videos and track loading
   useEffect(() => {
+    let loadCount = 0;
     const preloadVideos = [];
+    
     for (let i = 1; i <= totalVideos; i++) {
       const video = document.createElement('video');
       video.src = `videos/hero-${i}.mp4`;
       video.preload = 'auto';
       video.muted = true;
       video.loop = true;
+      
+      video.addEventListener('loadeddata', () => {
+        loadCount++;
+        setLoadedVideos(loadCount);
+        console.log(`Video ${i} loaded. Total: ${loadCount}/${totalVideos}`);
+        
+        // Hide loading screen only when ALL videos are fully loaded
+        if (loadCount === totalVideos) {
+          setTimeout(() => {
+            setLoading(false);
+            console.log('All videos loaded, removing loading screen');
+          }, 500); // Small delay to ensure smooth transition
+        }
+      });
+      
       preloadVideos.push(video);
       video.load();
     }
     videoRefs.current = preloadVideos;
   }, []);
-
-  const handleVideoLoad = () => {
-    setLoadedVideos((prev) => prev + 1);
-  };
-
-  useEffect(() => {
-    if (loadedVideos === totalVideos - 1) {
-      setLoading(false);
-    }
-  }, [loadedVideos]);
 
   const handleMiniVdClick = () => {
     setHasClicked(true);
@@ -129,7 +136,6 @@ const Hero = () => {
                   muted
                   id="current-video"
                   className="size-64 origin-center scale-150 object-cover object-center"
-                  onLoadedData={handleVideoLoad}
                 />
               </div>
             </VideoPreview>
@@ -142,7 +148,6 @@ const Hero = () => {
             muted
             id="next-video"
             className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
-            onLoadedData={handleVideoLoad}
           />
           <video
             src={getVideoSrc(
@@ -152,7 +157,6 @@ const Hero = () => {
             loop
             muted
             className="absolute left-0 top-0 size-full object-cover object-center"
-            onLoadedData={handleVideoLoad}
           />
         </div>
 
