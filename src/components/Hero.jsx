@@ -18,6 +18,22 @@ const Hero = () => {
 
   const totalVideos = 4;
   const nextVdRef = useRef(null);
+  const videoRefs = useRef([]);
+
+  // Preload all videos
+  useEffect(() => {
+    const preloadVideos = [];
+    for (let i = 1; i <= totalVideos; i++) {
+      const video = document.createElement('video');
+      video.src = `videos/hero-${i}.mp4`;
+      video.preload = 'auto';
+      video.muted = true;
+      video.loop = true;
+      preloadVideos.push(video);
+      video.load();
+    }
+    videoRefs.current = preloadVideos;
+  }, []);
 
   const handleVideoLoad = () => {
     setLoadedVideos((prev) => prev + 1);
@@ -85,7 +101,7 @@ const Hero = () => {
   return (
     <div className="relative h-dvh w-screen overflow-x-hidden">
       {loading && (
-        <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
+        <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-black">
           {/* https://uiverse.io/G4b413l/tidy-walrus-92 */}
           <div className="three-body">
             <div className="three-body__dot"></div>
@@ -97,7 +113,7 @@ const Hero = () => {
 
       <div
         id="video-frame"
-        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75"
+        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black"
       >
         <div>
           <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">

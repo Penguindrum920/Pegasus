@@ -66,31 +66,21 @@ export default function MusicSearch({ onTrackSelect, audioManager, defaultTracks
     }
 
     setIsSearching(true)
-    setShowDefaultTracks(false)
+    // Keep default tracks visible always
+    setShowDefaultTracks(true)
     
     try {
-      // First, filter default tracks by query
+      // Only filter and show default tracks (no external SoundCloud results)
       const filteredDefaults = defaultTracks.filter(track => 
         track.title.toLowerCase().includes(query.toLowerCase()) ||
         track.artist.toLowerCase().includes(query.toLowerCase())
       )
       
-      // Search SoundCloud for tracks
-      const scResults = await searchSoundCloudTracks(query, 20)
-      
-      // Combine results with default tracks first
-      const combinedResults = [...filteredDefaults, ...scResults]
-      
-      setSearchResults(combinedResults)
-      console.log('[MusicSearch] Found', combinedResults.length, 'tracks (', filteredDefaults.length, 'default,', scResults.length, 'SoundCloud)')
+      setSearchResults(filteredDefaults)
+      console.log('[MusicSearch] Found', filteredDefaults.length, 'default tracks matching search')
     } catch (error) {
       console.error('[MusicSearch] Search failed:', error)
-      // Still show filtered default tracks on error
-      const filteredDefaults = defaultTracks.filter(track => 
-        track.title.toLowerCase().includes(query.toLowerCase()) ||
-        track.artist.toLowerCase().includes(query.toLowerCase())
-      )
-      setSearchResults(filteredDefaults)
+      setSearchResults([])
     } finally {
       setIsSearching(false)
     }
@@ -162,8 +152,8 @@ export default function MusicSearch({ onTrackSelect, audioManager, defaultTracks
         </div>
       </div>
       
-      {/* Default Tracks Section */}
-      {showDefaultTracks && searchQuery.trim() === '' && (
+      {/* Default Tracks Section - Always Visible */}
+      {showDefaultTracks && (
         <div className="mb-6">
           <h3 className="text-violet-300 text-xl font-bold mb-3 text-left">Available Tracks</h3>
           <div className="bg-white/10 backdrop-blur-md rounded-2xl border-2 border-white/20 overflow-hidden">
@@ -208,8 +198,8 @@ export default function MusicSearch({ onTrackSelect, audioManager, defaultTracks
         </div>
       )}
       
-      {/* Search Results */}
-      {searchResults.length > 0 && (
+      {/* Filtered Search Results (only shows filtered default tracks) */}
+      {searchResults.length > 0 && searchQuery.trim() !== '' && (
         <div className="bg-white/10 backdrop-blur-md rounded-2xl border-2 border-white/20 overflow-hidden">
           <div className="max-h-96 overflow-y-auto custom-scrollbar">
             {searchResults.map((track) => (
