@@ -371,7 +371,7 @@ function App() {
         ]}
         displaySocials={true}
         displayItemNumbering={true}
-        logoUrl="/logo/logo.png"
+        logoUrl=""
         menuButtonColor="#fff"
         openMenuButtonColor="#000"
         accentColor="#7C3AED"
