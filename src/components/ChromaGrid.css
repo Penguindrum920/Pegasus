@@ -1,0 +1,165 @@
+.chroma-grid {
+  --r: 300px;
+  --cols: 3;
+  --rows: 2;
+  --x: 0px;
+  --y: 0px;
+  
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  grid-template-rows: repeat(var(--rows), 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.chroma-card {
+  position: relative;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid var(--card-border, transparent);
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+}
+
+.chroma-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--card-gradient, linear-gradient(145deg, #4F46E5, #000));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.chroma-card:hover::before {
+  opacity: 0.1;
+}
+
+.chroma-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle 200px at var(--mouse-x) var(--mouse-y),
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.chroma-card:hover::after {
+  opacity: 1;
+}
+
+.chroma-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.chroma-img-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.chroma-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.chroma-card:hover .chroma-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.chroma-info {
+  position: relative;
+  padding: 0.75rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.chroma-info .name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.25rem 0;
+}
+
+.chroma-info .handle {
+  display: block;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.25rem;
+}
+
+.chroma-info .role {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.chroma-info .location {
+  display: block;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 0.5rem;
+}
+
+.chroma-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle var(--r) at var(--x) var(--y),
+    rgba(255, 255, 255, 0.05),
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.chroma-grid:hover .chroma-overlay {
+  opacity: 1;
+}
+
+.chroma-fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 0.6s ease;
+  z-index: 9;
+}
+
+@media (max-width: 1024px) {
+  .chroma-grid {
+    --cols: 2;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .chroma-grid {
+    --cols: 1;
+    gap: 1rem;
+    padding: 1rem;
+  }
+}

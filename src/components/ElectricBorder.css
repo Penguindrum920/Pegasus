@@ -1,0 +1,83 @@
+.electric-border {
+  position: relative;
+  display: inline-block;
+}
+
+.eb-canvas-container {
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  right: -60px;
+  bottom: -60px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.eb-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.eb-layers {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--electric-border-color);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.eb-glow-1 {
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(
+    circle at center,
+    var(--electric-border-color) 0%,
+    transparent 70%
+  );
+  opacity: 0.15;
+  filter: blur(40px);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.eb-glow-2 {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(
+    circle at center,
+    var(--electric-border-color) 0%,
+    transparent 60%
+  );
+  opacity: 0.2;
+  filter: blur(20px);
+  animation: pulse 2s ease-in-out infinite reverse;
+}
+
+.eb-background-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    var(--electric-border-color) 0%,
+    transparent 100%
+  );
+  opacity: 0.05;
+  filter: blur(60px);
+}
+
+.eb-content {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}

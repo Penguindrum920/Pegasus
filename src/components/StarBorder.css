@@ -1,0 +1,37 @@
+.star-border-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.border-gradient-bottom,
+.border-gradient-top {
+  position: absolute;
+  left: -50%;
+  width: 200%;
+  height: 2px;
+  pointer-events: none;
+}
+
+.border-gradient-bottom {
+  bottom: 0;
+  animation: slide-border 6s linear infinite;
+}
+
+.border-gradient-top {
+  top: 0;
+  animation: slide-border 6s linear infinite reverse;
+}
+
+.inner-content {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes slide-border {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}

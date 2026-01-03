@@ -1,0 +1,21 @@
+.card-swap-container {
+  position: relative;
+  perspective: 2000px;
+  margin: 0 auto;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.card:hover {
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7);
+}
