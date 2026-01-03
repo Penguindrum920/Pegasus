@@ -421,8 +421,11 @@ function App() {
             <p className="text-lg text-gray-300 mb-2">
               Audio visualization requires interaction
             </p>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-400 mb-1">
               Click anywhere to start the experience
+            </p>
+            <p className="text-sm text-gray-400">
+              Click at center of screen to change the current video
             </p>
           </div>
         </div>
