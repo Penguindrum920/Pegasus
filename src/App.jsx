@@ -373,7 +373,7 @@ function App() {
         displayItemNumbering={true}
         logoUrl=""
         menuButtonColor="#fff"
-        openMenuButtonColor="#000"
+        openMenuButtonColor="#fff"
         accentColor="#7C3AED"
         changeMenuColorOnOpen={true}
         isFixed={true}
