@@ -160,7 +160,7 @@ const Hero = () => {
           />
         </div>
 
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-50 text-blue-75">
+        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-50 text-violet-300">
           Pegasu<b>s</b>
         </h1>
 
@@ -185,7 +185,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <h1 className="special-font hero-heading absolute bottom-5 right-5 z-50 text-violet-300">
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-white">
         Pegasu<b>s</b>
       </h1>
     </div>
